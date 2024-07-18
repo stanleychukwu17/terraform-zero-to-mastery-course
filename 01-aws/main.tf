@@ -16,18 +16,18 @@ provider "aws" {
 
 # Create a VPC
 resource "aws_vpc" "main" {
-    cidr_block = "10.00.0.0/16"
+    cidr_block = var.vpc_cidr_block
 
     tags = {
-        Name = "Main VPC"
+        Name = "Dev Env ${var.main_vpc_name}"
     }
 }
 
 # Create a subnet
 resource "aws_subnet" "main" {
     vpc_id = aws_vpc.main.id
-    cidr_block = "10.0.0.0/24"
-    availability_zone = "eu-central-1a"
+    cidr_block = var.web_subnet_cidr_block
+    availability_zone = var.web_subnet_zone
 
     tags = {
         Name = "Main Subnet"
