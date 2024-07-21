@@ -1,5 +1,7 @@
-Explanation
+This Code shows how you can create a VPC and add a subnet to that VPC, then make the subnet public so that it can be accessed by the Internet,
+It also shows how to connect the VPC to a route table and an IGW using the resource "aws_route_table_association"
 
+Explanation
 Internet Gateway: The aws_internet_gateway resource creates an IGW and attaches it to the VPC.
 
 Route Table: The aws_route_table resource creates a route table and defines a route (0.0.0.0/0) that directs all outbound traffic to the IGW.
