@@ -1,0 +1,37 @@
+# Explanation
+1. Security Group for ALB:
+    The "aws_security_group" resource defines the security group for the Application Load Balancer, allowing inbound traffic on port 80 (HTTP) from any source.
+
+2. Application Load Balancer:
+    The "aws_lb" resource creates an Application Load Balancer in the specified subnet.
+
+3. Target Group:
+    The "aws_lb_target_group" resource creates a target group for the load balancer. Instances in the VPC can be registered to this target group.
+
+4. Listener:
+    The "aws_lb_listener" resource creates a listener on port 80, forwarding incoming traffic to the target group.
+
+5. EC2 Instances:
+    - The "aws_instance" resource creates two EC2 instances (count = 2) within the subnet.
+    - Each instance runs a simple HTTP server that responds with "Hello, World!".
+    - The instances are assigned public IP addresses for direct access.
+
+6. Target Group Attachment:
+    - The "aws_lb_target_group_attachment" resource registers each EC2 instance with the "target grou"p, allowing the load balancer to forward traffic to these instances.
+
+
+
+# Verification
+    - After applying the configuration, the EC2 instances will be created and registered with the ALB.
+    - The ALB DNS name can be used to access the application, and traffic will be distributed across the registered instances.
+
+
+
+# How Incoming Traffic Works
+1. Traffic Flow:
+    - Incoming traffic reaches the Application Load Balancer via its DNS name.
+    - The load balancer forwards the traffic to the target group, which contains registered instances.
+
+2. Security and Scaling:
+    - The ALB provides automatic distribution of incoming traffic, improving fault tolerance and scalability.
+    - The ALB can be integrated with Auto Scaling Groups to handle dynamic scaling based on traffic.
