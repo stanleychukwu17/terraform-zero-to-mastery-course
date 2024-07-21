@@ -1,0 +1,7 @@
+Explanation
+
+Internet Gateway: The aws_internet_gateway resource creates an IGW and attaches it to the VPC.
+
+Route Table: The aws_route_table resource creates a route table and defines a route (0.0.0.0/0) that directs all outbound traffic to the IGW.
+
+Route Table Association: The aws_route_table_association resource associates the route table with the subnet, making the subnet a public subnet.
