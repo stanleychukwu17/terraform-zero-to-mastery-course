@@ -138,6 +138,37 @@ resource "aws_lb_listener" "app" {
   }
 }
 
+# Create EC2 Instances
+resource "aws_instance" "app" {
+  count = 2
+
+  ami                         = "ami-0c55b159cbfafe1f0" # replace with your desired AMI ID
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.main.id
+  security_groups             = [aws_security_group.instance_sg.name]
+  associate_public_ip_address = true
+
+  tags = {
+    Name = "app-instance-${count.index + 1}"
+  }
+
+  user_data = <<-EOF
+              #!/bin/bash
+              echo "Hello, World!" > /var/www/html/index.html
+              yum install -y httpd
+              systemctl start httpd
+              systemctl enable httpd
+              EOF
+}
+
+# Register EC2 Instances with Target Group
+resource "aws_lb_target_group_attachment" "app" {
+  count            = 2
+  target_group_arn = aws_lb_target_group.app.arn
+  target_id        = aws_instance.app[count.index].id
+  port             = 80
+}
+
 
 # Outputs to make it easier to retrieve the IDs
 output "vpc_id" {
