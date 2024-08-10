@@ -20,10 +20,10 @@ variable "web_subnet_zone" {
 
 variable "my_ip_address" {
   description = "my IP address, if you want to restrict access"
-  type = string
+  type        = string
 }
 
 variable "public_ip_address" {
   description = "public IP address, should allow everyone to be able to access the web server"
-  type = string
+  type        = string
 }
