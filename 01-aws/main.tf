@@ -56,3 +56,33 @@ resource "aws_default_route_table" "main_default_rt" {
     "Name" = "${var.main_vpc_name} default route table"
   }
 }
+
+# Create a security group
+resource "aws_default_security_group" "subnet_sec_group" {
+  vpc_id = aws_vpc.main.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.public_ip_address]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    "Name" = "${var.main_vpc_name} default security group"
+  }
+}
